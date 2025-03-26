@@ -15,7 +15,7 @@ class Task {
     }
 }
 
-public class Main {
+public class RagoMidterm {
     private static PriorityQueue<Task> taskQueue = new PriorityQueue<>((t1, t2) -> {
         if (t1.priority == t2.priority) {
             return Integer.compare(t1.id, t2.id);
