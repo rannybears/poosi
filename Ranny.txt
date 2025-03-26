@@ -1,0 +1,79 @@
+import java.util.*;
+
+class Task {
+    int id;
+    int priority;
+
+    public Task(int id, int priority) {
+        this.id = id;
+        this.priority = priority;
+    }
+
+    @Override
+    public String toString() {
+        return "Task ID: " + id + ", Priority: " + priority;
+    }
+}
+
+public class Main {
+    private static PriorityQueue<Task> taskQueue = new PriorityQueue<>((t1, t2) -> {
+        if (t1.priority == t2.priority) {
+            return Integer.compare(t1.id, t2.id);
+        }
+        return Integer.compare(t2.priority, t1.priority);
+    });
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int choice;
+
+        do {
+            System.out.println("\n1. Add task");
+            System.out.println("2. Execute next task");
+            System.out.println("3. Display all pending tasks");
+            System.out.println("4. Exit");
+            System.out.print("Enter your choice: ");
+            choice = scanner.nextInt();
+
+            switch (choice) {
+                case 1:
+                    System.out.print("Enter task ID: ");
+                    int id = scanner.nextInt();
+                    System.out.print("Enter task priority: ");
+                    int priority = scanner.nextInt();
+                    taskQueue.offer(new Task(id, priority));
+                    System.out.println("Task added.");
+                    break;
+
+                case 2:
+                    if (!taskQueue.isEmpty()) {
+                        Task task = taskQueue.poll();
+                        System.out.println("Executing: " + task);
+                    } else {
+                        System.out.println("No tasks to execute.");
+                    }
+                    break;
+
+                case 3:
+                    if (taskQueue.isEmpty()) {
+                        System.out.println("No pending tasks.");
+                    } else {
+                        System.out.println("Pending tasks:");
+                        for (Task t : taskQueue) {
+                            System.out.println(t);
+                        }
+                    }
+                    break;
+
+                case 4:
+                    System.out.println("Exiting...");
+                    break;
+
+                default:
+                    System.out.println("Invalid choice, try again.");
+            }
+        } while (choice != 4);
+
+        scanner.close();
+    }
+}
